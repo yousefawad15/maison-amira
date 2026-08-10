@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#FCF8F3" />
+<title>Maison Amira — Fine Patisserie · Sweifieh, Amman</title>
+<meta name="description" content="Maison Amira is a fine patisserie in Sweifieh, Amman — French pâtisserie and modern Levantine sweets, handcrafted in small batches every morning." />
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Maison Amira — Fine Patisserie · Sweifieh, Amman" />
+<meta property="og:description" content="French pâtisserie and modern Levantine sweets, handcrafted in small batches every morning in Sweifieh, Amman." />
+<meta property="og:image" content="assets/img/hero.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Favicon: inline SVG monogram -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FCF8F3'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='600' fill='%23B08C4A' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/styles.css?v=4" />
+</head>
+<body>
+
+<!-- ============================================================
+     LOADER — custom animated logo intro (masks first paint)
+============================================================ -->
+<div class="loader" id="loader" role="presentation" aria-hidden="true">
+  <div class="loader__inner">
+    <svg class="emblem emblem--lg" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <circle class="emblem__ring" cx="60" cy="60" r="53" />
+      <circle class="emblem__ring emblem__ring--thin" cx="60" cy="60" r="46" />
+      <path class="emblem__sprig" d="M60 96 C50 92 44 84 43 74" />
+      <path class="emblem__sprig" d="M60 96 C70 92 76 84 77 74" />
+      <path class="emblem__leaf" d="M47 82c-4-2-7-1-9 1 3 2 6 2 9-1z" />
+      <path class="emblem__leaf" d="M50 88c-4-1-7 0-8 3 3 1 6 0 8-3z" />
+      <path class="emblem__leaf" d="M73 82c4-2 7-1 9 1-3 2-6 2-9-1z" />
+      <path class="emblem__leaf" d="M70 88c4-1 7 0 8 3-3 1-6 0-8-3z" />
+      <path class="emblem__star" d="M60 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" />
+      <text class="emblem__mono" x="60" y="72" text-anchor="middle">A</text>
+    </svg>
+    <div class="loader__word">
+      <span class="loader__name">Maison Amira</span>
+      <span class="loader__ar" lang="ar" dir="rtl">ميزون أميرة</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<header class="nav" id="nav">
+  <div class="nav__wrap">
+    <a class="brand" href="#top" aria-label="Maison Amira — home">
+      <svg class="emblem emblem--sm" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <circle class="emblem__ring" cx="60" cy="60" r="53" />
+        <circle class="emblem__ring emblem__ring--thin" cx="60" cy="60" r="46" />
+        <path class="emblem__star" d="M60 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" />
+        <text class="emblem__mono" x="60" y="74" text-anchor="middle">A</text>
+      </svg>
+      <span class="brand__text">
+        <span class="brand__name">Maison Amira</span>
+        <span class="brand__ar" lang="ar" dir="rtl">ميزون أميرة</span>
+      </span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#story">Story</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#visit">Visit</a>
+      <a class="btn btn--ghost nav__cta" href="#visit">Find Us</a>
+    </nav>
+
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav class="mobile-menu__links" aria-label="Mobile">
+    <a href="#story">Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#visit">Visit</a>
+    <a class="btn btn--gold" href="#visit">Find Us</a>
+  </nav>
+  <span class="mobile-menu__ar" lang="ar" dir="rtl">ميزون أميرة</span>
+</div>
+
+<main id="top">
+
+  <!-- ==========================================================
+       HERO
+  ========================================================== -->
+  <section class="hero" id="hero" data-cursor="dark">
+    <div class="hero__media" data-parallax="0.18">
+      <div class="hero__kenburns" style="background-image:url('assets/img/hero.jpg')" aria-hidden="true"></div>
+      <!-- Optional muted video hero: drop your file at assets/hero.mp4 (+ .webm)
+           and uncomment. It layers over the poster with zero other changes.
+      <video class="hero__video" autoplay muted loop playsinline poster="assets/img/hero.jpg">
+        <source src="assets/hero.webm" type="video/webm" />
+        <source src="assets/hero.mp4"  type="video/mp4"  />
+      </video>
+      -->
+    </div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__grain" aria-hidden="true"></div>
+
+    <div class="hero__content" data-parallax="-0.06">
+      <p class="eyebrow eyebrow--light hero__el">Fine Patisserie · Sweifieh, Amman</p>
+      <h1 class="hero__title">
+        <span class="line"><span class="line__inner">A love letter,</span></span>
+        <span class="line"><span class="line__inner">written in <em>sugar &amp; rose</em></span></span>
+      </h1>
+      <p class="hero__sub hero__el">
+        French pâtisserie and modern Levantine sweets — composed by hand,
+        in small batches, every morning.
+      </p>
+      <div class="hero__cta hero__el">
+        <a class="btn btn--gold" href="#menu">
+          Explore the Menu
+          <svg viewBox="0 0 24 24" class="btn__icon" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+        <a class="btn btn--line-light" href="#story">Our Story</a>
+      </div>
+    </div>
+
+    <a href="#story" class="hero__scroll" aria-label="Scroll to story">
+      <span>Discover</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+    </a>
+  </section>
+
+  <!-- ==========================================================
+       MARQUEE
+  ========================================================== -->
+  <div class="marquee" aria-hidden="true" data-cursor="dark">
+    <div class="marquee__track">
+      <!-- duplicated twice for a seamless loop -->
+      <span class="marquee__group">
+        <span>Macarons</span><i class="blossom"></i>
+        <span>Mille-Feuille</span><i class="blossom"></i>
+        <span>Kunafa Nid d'Abeille</span><i class="blossom"></i>
+        <span>Cardamom Éclair</span><i class="blossom"></i>
+        <span>Rose Basbousa</span><i class="blossom"></i>
+        <span>Paris-Brest</span><i class="blossom"></i>
+        <span>Ma'amoul</span><i class="blossom"></i>
+        <span>Ashta</span><i class="blossom"></i>
+        <span>Baklava</span><i class="blossom"></i>
+        <span>Entremets</span><i class="blossom"></i>
+      </span>
+      <span class="marquee__group">
+        <span>Macarons</span><i class="blossom"></i>
+        <span>Mille-Feuille</span><i class="blossom"></i>
+        <span>Kunafa Nid d'Abeille</span><i class="blossom"></i>
+        <span>Cardamom Éclair</span><i class="blossom"></i>
+        <span>Rose Basbousa</span><i class="blossom"></i>
+        <span>Paris-Brest</span><i class="blossom"></i>
+        <span>Ma'amoul</span><i class="blossom"></i>
+        <span>Ashta</span><i class="blossom"></i>
+        <span>Baklava</span><i class="blossom"></i>
+        <span>Entremets</span><i class="blossom"></i>
+      </span>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       STORY
+  ========================================================== -->
+  <section class="story section" id="story">
+    <div class="story__grid">
+      <div class="story__media reveal">
+        <div class="img-frame img-frame--tall">
+          <img loading="lazy" onerror="this.classList.add('img-failed')"
+               src="assets/img/story.jpg"
+               alt="A Maison Amira pastry chef pipes cream and places gold leaf onto delicate tartlets" />
+        </div>
+        <div class="story__badge">
+          <span class="story__badge-year">Est.</span>
+          <span class="story__badge-num">2019</span>
+        </div>
+      </div>
+
+      <div class="story__body">
+        <p class="eyebrow reveal">Our Story</p>
+        <h2 class="reveal">Paris technique,<br /><em>Amman heart.</em></h2>
+        <p class="reveal">
+          Maison Amira began with a single pastry case and an obsession with detail.
+          After years training in the patisseries of Paris, Amira returned home to Sweifieh
+          to marry French method with the flavours she grew up with — Damascus rose,
+          Sicilian pistachio, wildflower honey, and orange blossom.
+        </p>
+        <p class="reveal">
+          Everything is made in small batches, by hand, each morning. Nothing sits.
+          Nothing is rushed. Each piece is finished the way a jeweller finishes a setting.
+        </p>
+        <blockquote class="pull-quote reveal">
+          “A dessert should feel like a small, edible piece of joy.”
+          <cite>— Amira, Founder</cite>
+        </blockquote>
+        <ul class="story__stats reveal">
+          <li><strong>Small-batch</strong><span>made fresh daily</span></li>
+          <li><strong>House-milled</strong><span>pistachio &amp; almond</span></li>
+          <li><strong>Sweifieh</strong><span>Amman, Jordan</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       MENU
+  ========================================================== -->
+  <section class="menu section" id="menu">
+    <div class="section__head">
+      <p class="eyebrow reveal">The Collection</p>
+      <h2 class="reveal">Signature Sweets</h2>
+      <p class="section__lead reveal">
+        A rotating selection from the case. Ask about today's fresh batch —
+        the seasons quietly rewrite the menu.
+      </p>
+    </div>
+
+    <!-- Featured trio -->
+    <div class="menu__featured">
+      <article class="feat reveal">
+        <div class="img-frame feat__img">
+          <img loading="lazy" onerror="this.classList.add('img-failed')"
+               src="assets/img/macaron.jpg"
+               alt="Rose and pistachio macarons stacked on marble" />
+          <span class="feat__tag">Signature</span>
+        </div>
+        <div class="feat__body">
+          <h3>Rose &amp; Pistachio Macaron</h3>
+          <p>Damascus rose ganache, house-milled Sicilian pistachio, a whisper of sea salt.</p>
+          <span class="feat__price">JD 1.50 <em>/ each</em></span>
+        </div>
+      </article>
+
+      <article class="feat reveal" data-reveal-delay="1">
+        <div class="img-frame feat__img">
+          <img loading="lazy" onerror="this.classList.add('img-failed')"
+               src="assets/img/kunafa.jpg"
+               alt="Golden kunafa topped with crushed pistachio on a gold-rimmed plate" />
+          <span class="feat__tag">House Favourite</span>
+        </div>
+        <div class="feat__body">
+          <h3>Kunafa Nid d'Abeille</h3>
+          <p>Hand-pulled phyllo, warm akkawi, orange-blossom syrup, crowned with pistachio.</p>
+          <span class="feat__price">JD 4.75</span>
+        </div>
+      </article>
+
+      <article class="feat reveal" data-reveal-delay="2">
+        <div class="img-frame feat__img">
+          <img loading="lazy" onerror="this.classList.add('img-failed')"
+               src="assets/img/millefeuille.jpg"
+               alt="Mille-feuille with vanilla cream, raspberries and gold leaf" />
+          <span class="feat__tag">Signature</span>
+        </div>
+        <div class="feat__body">
+          <h3>Mille-Feuille d'Amira</h3>
+          <p>Caramelised puff, Tahitian vanilla-bean crème, a single leaf of edible gold.</p>
+          <span class="feat__price">JD 4.50</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Full list -->
+    <div class="menu__lists">
+      <div class="menu__col reveal">
+        <h3 class="menu__cat">La Table Française</h3>
+        <ul class="menu__list">
+          <li><span class="menu__name">Cardamom Éclair</span><span class="menu__dots"></span><span class="menu__price">JD 3.75</span></li>
+          <li><span class="menu__name">Fig &amp; Honey Tartelette</span><span class="menu__dots"></span><span class="menu__price">JD 4.25</span></li>
+          <li><span class="menu__name">Pistachio Paris-Brest</span><span class="menu__dots"></span><span class="menu__price">JD 5.00</span></li>
+          <li><span class="menu__name">Rose Framboise Entremet</span><span class="menu__dots"></span><span class="menu__price">JD 5.50</span></li>
+          <li><span class="menu__name">Macarons — Box of Six</span><span class="menu__dots"></span><span class="menu__price">JD 8.50</span></li>
+        </ul>
+      </div>
+
+      <div class="menu__col reveal" data-reveal-delay="1">
+        <h3 class="menu__cat">La Table Levantine</h3>
+        <ul class="menu__list">
+          <li><span class="menu__name">Rose Basbousa, Clotted Cream</span><span class="menu__dots"></span><span class="menu__price">JD 3.25</span></li>
+          <li><span class="menu__name">Ashta Mille-Feuille</span><span class="menu__dots"></span><span class="menu__price">JD 4.50</span></li>
+          <li><span class="menu__name">Date &amp; Walnut Ma'amoul</span><span class="menu__dots"></span><span class="menu__price">JD 2.75</span></li>
+          <li><span class="menu__name">Pistachio Baklava Fingers</span><span class="menu__dots"></span><span class="menu__price">JD 3.50</span></li>
+          <li><span class="menu__name">The Amira Box — Curated Dozen</span><span class="menu__dots"></span><span class="menu__price">JD 22</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="menu__note reveal">Prices in Jordanian Dinar. Custom boxes &amp; celebration orders on request.</p>
+  </section>
+
+  <!-- ==========================================================
+       GALLERY
+  ========================================================== -->
+  <section class="gallery section" id="gallery">
+    <div class="section__head">
+      <p class="eyebrow reveal">The Case</p>
+      <h2 class="reveal">A Feast for the Eyes</h2>
+    </div>
+
+    <div class="gallery__grid">
+      <figure class="gcard reveal" data-src="assets/img/display.jpg">
+        <div class="img-frame"><img loading="lazy" onerror="this.classList.add('img-failed')" src="assets/img/display.jpg" alt="The Maison Amira patisserie counter, laid with pastries on gold stands" /></div>
+        <figcaption>The patisserie counter</figcaption>
+      </figure>
+      <figure class="gcard reveal" data-reveal-delay="1" data-src="assets/img/box.jpg">
+        <div class="img-frame"><img loading="lazy" onerror="this.classList.add('img-failed')" src="assets/img/box.jpg" alt="A blush gift box of assorted macarons tied with silk ribbon" /></div>
+        <figcaption>The Amira Box</figcaption>
+      </figure>
+      <figure class="gcard reveal" data-reveal-delay="2" data-src="assets/img/eclair.jpg">
+        <div class="img-frame"><img loading="lazy" onerror="this.classList.add('img-failed')" src="assets/img/eclair.jpg" alt="Pistachio-glazed éclairs finished with gold leaf" /></div>
+        <figcaption>Pistachio éclairs</figcaption>
+      </figure>
+      <figure class="gcard reveal" data-src="assets/img/basbousa.jpg">
+        <div class="img-frame"><img loading="lazy" onerror="this.classList.add('img-failed')" src="assets/img/basbousa.jpg" alt="Rose basbousa with a quenelle of clotted cream and pistachio" /></div>
+        <figcaption>Rose basbousa &amp; cream</figcaption>
+      </figure>
+      <figure class="gcard reveal" data-reveal-delay="1" data-src="assets/img/cake.jpg">
+        <div class="img-frame"><img loading="lazy" onerror="this.classList.add('img-failed')" src="assets/img/cake.jpg" alt="A blush celebration cake with gold leaf and fresh figs" /></div>
+        <figcaption>Celebration cakes, to order</figcaption>
+      </figure>
+      <figure class="gcard reveal" data-reveal-delay="2" data-src="assets/img/tart.jpg">
+        <div class="img-frame"><img loading="lazy" onerror="this.classList.add('img-failed')" src="assets/img/tart.jpg" alt="Fig and honey tartelette with vanilla cream" /></div>
+        <figcaption>Fig &amp; honey tartelette</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VISIT
+  ========================================================== -->
+  <section class="visit section" id="visit">
+    <div class="visit__grid">
+      <div class="visit__info">
+        <p class="eyebrow reveal">Visit Us</p>
+        <h2 class="reveal">Find us in Sweifieh</h2>
+        <p class="section__lead reveal">
+          Slip off Al-Wakalat Street into a quiet, rose-scented room.
+          Stay for a coffee, or take a box home in ribbon.
+        </p>
+
+        <ul class="visit__details reveal">
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <div><strong>Al-Wakalat Street, Sweifieh</strong><span>Amman, Jordan</span></div>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <div><strong>Daily · 10:00 – 23:00</strong><span>Friday from 13:00</span></div>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5c0 8.3 6.7 15 15 15 1 0 1.7-.8 1.5-1.8l-.5-2.4a1.5 1.5 0 0 0-1.7-1.2l-2.6.4a12 12 0 0 1-4.9-4.9l.4-2.6A1.5 1.5 0 0 0 9.7 4l-2.4-.5C6.3 3.3 5.5 4 5.5 5H4z"/></svg>
+            <div><strong>+962 7 9000 0000</strong><span>Call or WhatsApp</span></div>
+          </li>
+        </ul>
+
+        <div class="visit__cta reveal">
+          <a class="btn btn--gold" href="https://wa.me/962790000000" target="_blank" rel="noopener">
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path d="M8.5 8.4c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .6.5l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.2.3 0 .6a6 6 0 0 0 2.6 2.3c.3.1.4.1.6-.1l.6-.7c.2-.2.3-.2.6-.1l1.6.8c.2.1.3.2.3.4 0 .5-.3 1.3-.9 1.5-1 .4-2.3.2-4-.7a9 9 0 0 1-3.5-3.6c-.7-1.3-.7-2.4-.3-3.5z"/></svg>
+            Message on WhatsApp
+          </a>
+          <a class="btn btn--line" href="https://instagram.com/maisonamira" target="_blank" rel="noopener">
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg>
+            @maisonamira
+          </a>
+        </div>
+      </div>
+
+      <div class="visit__map reveal">
+        <div class="img-frame img-frame--map">
+          <iframe
+            title="Map of Maison Amira in Sweifieh, Amman"
+            src="https://www.google.com/maps?q=Sweifieh,+Amman,+Jordan&z=15&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="footer" data-cursor="dark">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <svg class="emblem emblem--md" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <circle class="emblem__ring" cx="60" cy="60" r="53" />
+        <circle class="emblem__ring emblem__ring--thin" cx="60" cy="60" r="46" />
+        <path class="emblem__star" d="M60 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" />
+        <text class="emblem__mono" x="60" y="74" text-anchor="middle">A</text>
+      </svg>
+      <p class="footer__name">Maison Amira</p>
+      <p class="footer__ar" lang="ar" dir="rtl">ميزون أميرة</p>
+      <p class="footer__tag">Fine patisserie, handcrafted in Sweifieh.</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#story">Story</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#visit">Visit</a>
+    </nav>
+
+    <div class="footer__connect">
+      <p class="footer__label">Stay in touch</p>
+      <div class="footer__social">
+        <a href="https://instagram.com/maisonamira" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/962790000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path d="M8.5 8.4c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .6.5l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.2.3 0 .6a6 6 0 0 0 2.6 2.3c.3.1.4.1.6-.1l.6-.7c.2-.2.3-.2.6-.1l1.6.8c.2.1.3.2.3.4 0 .5-.3 1.3-.9 1.5-1 .4-2.3.2-4-.7a9 9 0 0 1-3.5-3.6c-.7-1.3-.7-2.4-.3-3.5z"/></svg>
+        </a>
+        <a href="tel:+962790000000" aria-label="Phone">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5c0 8.3 6.7 15 15 15 1 0 1.7-.8 1.5-1.8l-.5-2.4a1.5 1.5 0 0 0-1.7-1.2l-2.6.4a12 12 0 0 1-4.9-4.9l.4-2.6A1.5 1.5 0 0 0 9.7 4l-2.4-.5C6.3 3.3 5.5 4 5.5 5H4z"/></svg>
+        </a>
+      </div>
+      <p class="footer__addr">Al-Wakalat Street, Sweifieh<br />Amman, Jordan</p>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>© <span id="year">2026</span> Maison Amira</p>
+    <p>Handcrafted in Sweifieh, Amman · <span lang="ar" dir="rtl">صُنع بحب</span></p>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox__close" id="lightboxClose" aria-label="Close image">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <img id="lightboxImg" src="" alt="" />
+</div>
+
+<!-- Custom cursor (fine-pointer devices only; activated by JS) -->
+<div class="cursor-layer" aria-hidden="true">
+  <div class="cursor" id="cursor"><span class="cursor__label"></span></div>
+  <div class="cursor__dot" id="cursorDot"></div>
+</div>
+
+<script src="js/main.js?v=4"></script>
+</body>
+</html>

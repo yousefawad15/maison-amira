@@ -1,0 +1,39 @@
+# ---- OS junk ----
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ---- Editor / IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- Dependencies (not used now, but future-proof) ----
+node_modules/
+package-lock.json.bak
+
+# ---- Secrets — NEVER commit these ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# ---- Build / deploy artifacts ----
+dist/
+build/
+.netlify/
+.wrangler/
+.cache/
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+
+# ---- Local archives ----
+*.zip
