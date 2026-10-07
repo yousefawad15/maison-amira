@@ -1,0 +1,322 @@
+{
+ "v1": {
+  "tts_model": "gemini-3.1-flash-tts-preview",
+  "voice": "Leda",
+  "judge": {
+   "dialect_heard": "Saudi Arabic (Riyadh)",
+   "saudi_authenticity_1to10": 10,
+   "naturalness_1to10": 10,
+   "lines": [
+    {
+     "i": 0,
+     "heard": "سيداتي،",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 1,
+     "heard": "عندي لكم سرّ لراحتكم في سنّ الأمل.",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 2,
+     "heard": "ثلاث أسباب تخلّيكم تجرّبون سيميدونا فورت.",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 3,
+     "heard": "أولاً: من الطبيعة.",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 4,
+     "heard": "فيه خلاصة نبتة الكوهوش السوداء.",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 5,
+     "heard": "ثانياً: يساعد على تخفيف الهبّات الساخنة،",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 6,
+     "heard": "والتعرّق الليلي، وتقلّب المزاج.",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 7,
+     "heard": "ثالثاً: تركيبة غير هرمونية،",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 8,
+     "heard": "وحبّة وحدة باليوم.",
+     "matches": true,
+     "issue": ""
+    },
+    {
+     "i": 9,
+     "heard": "اطلبيه الحين من هيلث ستور.",
+     "matches": true,
+     "issue": ""
+    }
+   ],
+   "overall_ok": true,
+   "judge_model": "gemini-3.5-flash"
+  },
+  "split_check": "ok (re-split with alignment DP)"
+ },
+ "v2": {
+  "tts_model": "gemini-3.1-flash-tts-preview",
+  "voice": "Leda",
+  "judge": {
+   "dialect_heard": "Saudi Arabic (Riyadh)",
+   "saudi_authenticity_1to10": 10,
+   "naturalness_1to10": 10,
+   "lines": [
+    {
+     "i": 0,
+     "heard": "حرارة تجيكِ فجأة؟",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 1,
+     "heard": "وتعرّق يصحّيكِ بالليل؟",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 2,
+     "heard": "ومزاجكِ يتقلّب بدون سبب؟",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 3,
+     "heard": "هذي أعراض انقطاع الطمث.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 4,
+     "heard": "وأنتِ مو لحالكِ.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 5,
+     "heard": "سيميدونا فورت،",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 6,
+     "heard": "مستخلص نباتي من عشبة الكوهوش السوداء،",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 7,
+     "heard": "يساعد على تخفيف الأعراض،",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 8,
+     "heard": "وتركيبته غير هرمونية.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 9,
+     "heard": "حبّة وحدة باليوم،",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 10,
+     "heard": "وكثير من السيدات يلاحظون الفرق خلال أسبوعين إلى أربعة.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 11,
+     "heard": "اطلبيه الحين من هيلث ستور.",
+     "matches": true,
+     "issue": null
+    }
+   ],
+   "overall_ok": true,
+   "judge_model": "gemini-3.6-flash"
+  },
+  "split_check": "ok"
+ },
+ "v3": {
+  "tts_model": "gemini-3.1-flash-tts-preview",
+  "voice": "Vindemiatrix",
+  "judge": {
+   "dialect_heard": "Saudi (Riyadh/Najdi)",
+   "saudi_authenticity_1to10": 10,
+   "naturalness_1to10": 10,
+   "lines": [
+    {
+     "i": 0,
+     "heard": "قبل زواج بنتي بشهرين.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 1,
+     "heard": "كل ليلة أصحى من الحرّ،",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 2,
+     "heard": "وما أقدر أرجع أنام.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 3,
+     "heard": "وفي النهار، تجيني الهبّات فجأة قدّام الناس،",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 4,
+     "heard": "ومزاجي صار يتقلّب.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 5,
+     "heard": "لين قالت لي أختي: جرّبي شي طبيعي وغير هرموني.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 6,
+     "heard": "وعرّفتني على سيميدونا فورت.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 7,
+     "heard": "فيه خلاصة الكوهوش السوداء، وحبّة وحدة باليوم.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 8,
+     "heard": "ويوم زواج بنتي…",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 9,
+     "heard": "كنت مرتاحة، وأعيش اللحظة.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 10,
+     "heard": "اطلبيه الحين من هيلث ستور.",
+     "matches": true,
+     "issue": null
+    }
+   ],
+   "overall_ok": true,
+   "judge_model": "gemini-3-flash-preview"
+  },
+  "split_check": "ok"
+ },
+ "v4": {
+  "tts_model": "gemini-3.1-flash-tts-preview",
+  "voice": "Vindemiatrix",
+  "judge": {
+   "dialect_heard": "Saudi (Riyadh)",
+   "saudi_authenticity_1to10": 10,
+   "naturalness_1to10": 10,
+   "lines": [
+    {
+     "i": 0,
+     "heard": "سنة الخمسين… ما توقعت تكون كذا.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 1,
+     "heard": "في الدوام، تجيني الهبّة فجأة… وسط الاجتماع.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 2,
+     "heard": "وبالليل، تعرّق وقلق… وأصحى تعبانة.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 3,
+     "heard": "سألت الصيدلانية،",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 4,
+     "heard": "وقالت لي: جسمك يحتاج دعم يناسب هالمرحلة.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 5,
+     "heard": "وعطتني سيميدونا فورت.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 6,
+     "heard": "مستخلص نباتي، وغير هرموني.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 7,
+     "heard": "حبّة وحدة كل صباح.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 8,
+     "heard": "وصار جزء من روتيني.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 9,
+     "heard": "واليوم… رجعت أنا.",
+     "matches": true,
+     "issue": null
+    },
+    {
+     "i": 10,
+     "heard": "اطلبيه الحين من هيلث ستور.",
+     "matches": true,
+     "issue": null
+    }
+   ],
+   "overall_ok": true,
+   "judge_model": "gemini-3.6-flash"
+  },
+  "split_check": "ok"
+ }
+}

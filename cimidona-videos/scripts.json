@@ -94,7 +94,9 @@
     "tail": 3.8,
     "music": "neon",
     "tempo": 1.0
-   }
+   },
+   "voice": "Leda",
+   "persona": "an upbeat, warm Saudi woman presenting a product to her friends on social media"
   },
   "v2": {
    "title": "Problem → solution — light illustrated",
@@ -188,7 +190,9 @@
     "tail": 3.8,
     "music": "soft",
     "tempo": 1.0
-   }
+   },
+   "voice": "Leda",
+   "persona": "a warm, caring Saudi woman talking to other women about menopause"
   },
   "v3": {
    "title": "Cinematic story — countdown to daughter's wedding",
@@ -267,7 +271,9 @@
     "tail": 3.8,
     "music": "story",
     "tempo": 1.0
-   }
+   },
+   "voice": "Vindemiatrix",
+   "persona": "a Saudi mother in her fifties telling her own story, sincere and emotional"
   },
   "v4": {
    "title": "First-person testimonial — at work",
@@ -334,11 +340,23 @@
     "tail": 3.8,
     "music": "story",
     "tempo": 1.0
-   }
+   },
+   "voice": "Vindemiatrix",
+   "persona": "a Saudi professional woman around fifty telling her own story, sincere and reflective"
   }
  },
  "gemini_tts": {
   "voice": "Leda",
-  "max_tries": 4
+  "max_tries": 2,
+  "tts_model": "gemini-3.1-flash-tts-preview",
+  "qa_model": "gemini-3.8-flash",
+  "qa_fallbacks": [
+   "gemini-3.7-flash",
+   "gemini-3.6-flash",
+   "gemini-3-flash-preview",
+   "gemini-flash-latest",
+   "gemini-3.5-flash",
+   "gemini-3.1-flash-lite"
+  ]
  }
 }
