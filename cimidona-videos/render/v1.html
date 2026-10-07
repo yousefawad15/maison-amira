@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Tajawal:wght@500;700;800;900&family=Outfit:wght@300;600;800&display=block" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; background: #030c10; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: 'Tajawal', sans-serif; color: #fff;
+    background: radial-gradient(1200px 900px at 50% 42%, #0b2a33 0%, #061820 45%, #030b0f 100%); }
+  .abs { position: absolute; will-change: transform, opacity; }
+  .center { left: 0; right: 0; text-align: center; }
+  .g { color: #a6e65a; text-shadow: 0 0 18px rgba(166,230,90,.75), 0 0 60px rgba(120,210,60,.45); }
+  .c { color: #5fd4f2; text-shadow: 0 0 18px rgba(95,212,242,.7), 0 0 50px rgba(95,212,242,.35); }
+  .h1 { font-family: 'Cairo', sans-serif; font-weight: 900; line-height: 1.05; }
+  .streak { position: absolute; width: 260px; height: 2600px; top: -340px; background: linear-gradient(90deg, transparent, rgba(166,230,90,.06), transparent); transform-origin: center; }
+  .dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #a6e65a; box-shadow: 0 0 10px #a6e65a; }
+  .ring { position: absolute; border-radius: 50%; border: 2px solid rgba(166,230,90,.22); box-shadow: 0 0 40px rgba(166,230,90,.08) inset; }
+  .num { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 300px; line-height: 1; color: transparent; -webkit-text-stroke: 4px #a6e65a; filter: drop-shadow(0 0 16px rgba(166,230,90,.75)); direction: ltr; }
+  .bar { position: absolute; top: 96px; height: 8px; width: 296px; border-radius: 6px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .bar i { position: absolute; inset: 0; background: #a6e65a; box-shadow: 0 0 14px #a6e65a; transform-origin: right; }
+  .label { font-weight: 800; font-size: 46px; color: #a6e65a; }
+  .chip { display: inline-flex; align-items: center; gap: 18px; padding: 18px 34px 18px 26px; border-radius: 60px; background: rgba(10,40,48,.85); border: 2px solid rgba(166,230,90,.45); box-shadow: 0 0 30px rgba(166,230,90,.15); font-weight: 800; font-size: 44px; white-space: nowrap; }
+  .chip svg { width: 56px; height: 56px; }
+  .cap { position: absolute; left: 50px; right: 50px; top: 1590px; height: 200px; }
+  .cap-line { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-weight: 800; font-size: 62px; line-height: 1.35; text-shadow: 0 4px 18px rgba(0,0,0,.6); }
+  .cap .w { display: inline-block; margin: 0 9px; }
+  .cap .w.hl.on { color: #a6e65a; text-shadow: 0 0 16px rgba(166,230,90,.8); }
+  .box { filter: drop-shadow(0 40px 60px rgba(0,0,0,.55)) drop-shadow(0 0 40px rgba(166,230,90,.18)); }
+  .btn { display: inline-flex; align-items: center; gap: 22px; padding: 26px 64px; border-radius: 80px; background: linear-gradient(180deg,#b6f06a,#7cc33a); color: #062012; font-weight: 900; font-size: 64px; box-shadow: 0 0 50px rgba(166,230,90,.55), 0 10px 0 #4f8a1e; }
+  .disc { position: absolute; left: 70px; right: 70px; top: 1800px; text-align: center; font-size: 25px; line-height: 1.5; color: rgba(255,255,255,.45); font-weight: 500; }
+  .flash { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(166,230,90,.55), rgba(166,230,90,0) 70%); pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib.js"></script>
+<script>
+const stage = document.getElementById('stage');
+const ICON = {
+  leaf: '<svg viewBox="0 0 64 64"><path d="M52 10C30 10 12 22 12 42c0 4 1 8 3 11 3-12 12-22 25-27-11 7-18 16-21 29 4 2 8 3 12 3 20 0 25-24 21-48z" fill="#a6e65a"/></svg>',
+  fire: '<svg viewBox="0 0 64 64"><path d="M33 4c3 12-9 16-9 28 0 5 3 9 7 10-3-6 2-11 6-15 2 6 9 9 9 17 0 9-7 16-16 16S12 53 12 43C12 26 31 20 33 4z" fill="#ff8a4c"/></svg>',
+  drop: '<svg viewBox="0 0 64 64"><path d="M32 6C24 20 14 30 14 42a18 18 0 0 0 36 0C50 30 40 20 32 6z" fill="#5fd4f2"/></svg>',
+  wave: '<svg viewBox="0 0 64 64"><path d="M6 36c8-14 14-14 20 0s12 14 20 0 10-8 12-4" stroke="#c9a7ff" stroke-width="7" fill="none" stroke-linecap="round"/></svg>',
+  pill: '<svg viewBox="0 0 64 64"><g transform="rotate(-35 32 32)"><rect x="8" y="20" width="48" height="24" rx="12" fill="#fff"/><rect x="32" y="20" width="24" height="24" rx="12" fill="#a6e65a"/><rect x="30" y="20" width="10" height="24" fill="#a6e65a"/></g></svg>',
+  cart: '<svg viewBox="0 0 64 64" width="60" height="60"><path d="M6 10h8l7 30h30l6-22H18" stroke="#062012" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="52" r="5" fill="#062012"/><circle cx="48" cy="52" r="5" fill="#062012"/></svg>',
+  shield: '<svg viewBox="0 0 200 230" width="300" height="345"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b6f06a"/><stop offset="1" stop-color="#4f9a2a"/></linearGradient></defs><path id="sh" d="M100 8 L184 40 V110 C184 165 146 205 100 222 C54 205 16 165 16 110 V40 Z" fill="url(#sg)" stroke="#d8ff9e" stroke-width="5"/><path id="ck" d="M58 116 L88 146 L146 86" stroke="#fff" stroke-width="20" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="140" stroke-dashoffset="140"/></svg>',
+  flower: '<svg viewBox="0 0 120 400" width="120" height="400"><path d="M60 400 C60 300 58 200 62 60" stroke="#6fa83a" stroke-width="4" fill="none"/>' +
+    Array.from({length: 26}, (_, k) => `<circle cx="${60 + Math.sin(k * 1.7) * 14}" cy="${70 + k * 7}" r="${7 - k * 0.12}" fill="#e9f6ff" opacity="${0.9 - k * 0.02}"/>`).join('') + '</svg>',
+};
+
+// ---------- background layers ----------
+const streaks = [0, 1, 2].map(k => { const s = el('div', 'streak', '', stage); s.style.left = (200 + k * 300) + 'px'; return s; });
+const R = rng(11);
+const dots = Array.from({ length: 46 }, () => { const d = el('div', 'dot', '', stage); return { d, x: R() * 1080, y: R() * 1920, v: 18 + R() * 40, s: 0.4 + R() * 0.9, ph: R() * 6 }; });
+const flowers = [[60, 1380, 0.9], [920, 1450, 1.1], [820, 1290, 0.7]].map(([x, y, s]) => { const f = el('div', 'abs', ICON.flower, stage); f.style.left = x + 'px'; f.style.top = y + 'px'; return { f, s }; });
+on(t => {
+  streaks.forEach((s, k) => S(s, { o: 1, x: Math.sin(t * 0.25 + k * 2) * 120, r: 24 }));
+  dots.forEach(o => {
+    const y = ((o.y - o.v * t) % 1920 + 1920) % 1920;
+    S(o.d, { o: 0.25 + 0.35 * Math.sin(t * 2 + o.ph) ** 2, x: o.x + Math.sin(t * 0.8 + o.ph) * 20, y, s: o.s });
+  });
+  flowers.forEach(({ f, s }, k) => S(f, { o: 0.16, s, r: Math.sin(t * 0.7 + k) * 3 }));
+});
+
+// ---------- section windows ----------
+const secR1 = () => ls(3) - 0.25, secR2 = () => ls(5) - 0.25, secR3 = () => ls(7) - 0.25, secCTA = () => ls(9) - 0.2;
+const flash = el('div', 'flash', '', stage);
+on(t => {
+  const ts = [ls(2) + 0.02, secR1(), secR2(), secR3(), secCTA()];
+  let o = 0; ts.forEach(a => { o = Math.max(o, env(t, a - 0.05, a + 0.05, 0.05, 0.4) * 0.55); });
+  S(flash, { o });
+});
+
+// ---------- INTRO ----------
+const i1 = el('div', 'abs center h1', 'سيداتي،', stage); i1.style.top = '420px'; i1.style.fontSize = '120px';
+const i2 = el('div', 'abs center', '<span style="font-weight:800;font-size:84px">عندي لكم</span>', stage); i2.style.top = '600px';
+const i3 = el('div', 'abs center h1 g', 'سرّ', stage); i3.style.top = '700px'; i3.style.fontSize = '330px';
+const i4 = el('div', 'abs center', '<span style="font-weight:700;font-size:62px;color:#cfe9ef">لراحتكم في <span class="c" style="font-weight:900">سنّ الأمل</span></span>', stage); i4.style.top = '1140px';
+const n3 = el('div', 'abs center num', '3', stage); n3.style.top = '330px'; n3.style.fontSize = '520px'; n3.style.webkitTextStroke = '6px #a6e65a';
+const n3t = el('div', 'abs center h1', 'أسباب <span class="g">تخلّيكم</span> تجرّبون', stage); n3t.style.top = '930px'; n3t.style.fontSize = '84px';
+const introBox = el('img', 'abs box', '', stage); introBox.src = '../assets/gen/box_angle.png'; Object.assign(introBox.style, { width: '560px', left: '260px', top: '1070px' });
+on(t => {
+  const endI = ls(2) - 0.1;
+  S(i1, { o: env(t, ls(0) - 0.1, endI, 0.3, 0.25), y: (1 - p(t, ls(0) - 0.1, 0.5)) * 40, s: 0.92 + 0.08 * p(t, ls(0) - 0.1, 0.6) });
+  S(i2, { o: env(t, wordT(1, 0) - 0.05, endI, 0.3, 0.25), y: (1 - p(t, wordT(1, 0), 0.5)) * 30 });
+  const sp = p(t, wordT(1, 2) - 0.08, 0.6, E.outBack);
+  S(i3, { o: env(t, wordT(1, 2) - 0.08, endI, 0.15, 0.25), s: 0.4 + 0.6 * sp + 0.02 * Math.sin(t * 4), blur: (1 - p(t, wordT(1, 2) - 0.08, 0.3)) * 12 });
+  S(i4, { o: env(t, wordT(1, 3) - 0.05, endI, 0.3, 0.25), y: (1 - p(t, wordT(1, 3), 0.5)) * 30 });
+  const a = ls(2) - 0.05, b = secR1() - 0.05;
+  S(n3, { o: env(t, a, b, 0.2, 0.3), s: 0.6 + 0.4 * p(t, a, 0.7, E.outBack), r: (1 - p(t, a, 0.6)) * -12 });
+  S(n3t, { o: env(t, wordT(2, 1) - 0.05, b, 0.25, 0.3), y: (1 - p(t, wordT(2, 1), 0.5)) * 40 });
+  const bt = wordT(2, 4) - 0.25;
+  S(introBox, { o: env(t, bt, b, 0.3, 0.3), y: (1 - p(t, bt, 0.8, E.outBack)) * 500 + Math.sin(t * 1.6) * 10, r: (1 - p(t, bt, 0.8)) * 14 - 4 });
+});
+
+// ---------- shared listicle chrome (progress bars, label, number) ----------
+const bars = [0, 1, 2].map(k => { const b = el('div', 'bar', '<i></i>', stage); b.style.right = (60 + k * 324) + 'px'; return b; });
+const label = el('div', 'abs label', '', stage); Object.assign(label.style, { right: '64px', top: '150px' });
+const num = el('div', 'abs num', '', stage); Object.assign(num.style, { left: '50px', top: '120px' });
+const names = ['السبب الأول', 'السبب الثاني', 'السبب الثالث'];
+on(t => {
+  const secs = [secR1(), secR2(), secR3()];
+  const vis = env(t, secR1(), secCTA() - 0.1, 0.3, 0.3);
+  let k = -1; secs.forEach((s, i) => { if (t >= s) k = i; });
+  bars.forEach((b, i) => {
+    S(b, { o: vis });
+    const fill = i < k ? 1 : i === k ? p(t, secs[i], 0.8) : 0;
+    b.firstChild.style.transform = `scaleX(${fill.toFixed(3)})`;
+  });
+  if (k >= 0) {
+    label.textContent = names[k]; num.textContent = '0' + (k + 1);
+    const pin = p(t, secs[k], 0.5);
+    S(label, { o: vis * pin, x: (1 - pin) * 40 });
+    S(num, { o: vis * (0.5 + 0.5 * pin), y: (1 - pin) * 50, s: 0.9 + 0.1 * pin });
+  } else { S(label, { o: 0 }); S(num, { o: 0 }); }
+});
+
+// headline helper: two lines (white + green)
+function headline(a, b) {
+  const h = el('div', 'abs center h1', `<div style="font-size:112px">${a}</div><div class="g" style="font-size:136px;margin-top:6px">${b}</div>`, stage);
+  h.style.top = '430px';
+  return h;
+}
+function rings(cx, cy) {
+  return [300, 420, 560].map(r => { const g = el('div', 'ring', '', stage); Object.assign(g.style, { width: r * 2 + 'px', height: r * 2 + 'px', left: (cx - r) + 'px', top: (cy - r) + 'px' }); return g; });
+}
+function chip(html, x, y) { const c = el('div', 'abs', `<div class="chip">${html}</div>`, stage); Object.assign(c.style, { left: 0, right: 0, top: y + 'px', textAlign: 'center' }); return c; }
+
+// ---------- REASON 1: nature ----------
+const h1 = headline('من', 'الطبيعة');
+const r1rings = rings(540, 1060);
+const r1box = el('img', 'abs box', '', stage); r1box.src = '../assets/gen/box_front.png'; Object.assign(r1box.style, { width: '520px', left: '280px', top: '860px' });
+const leaves = Array.from({ length: 7 }, (_, k) => { const l = el('div', 'abs', ICON.leaf, stage); Object.assign(l.style, { width: '84px', height: '84px', left: '498px', top: '1018px' }); return l; });
+const c1 = chip(ICON.flower.replace('width="120" height="400"', 'width="30" height="100" style="height:64px"') + '<span>خلاصة <span class="g">الكوهوش السوداء</span></span>', 0, 1380);
+const c1b = el('div', 'abs center', '<span style="font-family:Outfit;font-weight:300;font-size:34px;letter-spacing:2px;color:#9fc7cf;direction:ltr;display:inline-block">Cimicifuga racemosa · Black cohosh</span>', stage); c1b.style.top = '1500px';
+on(t => {
+  const a = secR1(), b = secR2() - 0.05;
+  const v = env(t, a, b, 0.35, 0.3);
+  S(h1, { o: v, y: (1 - p(t, a, 0.6)) * 50 });
+  r1rings.forEach((g, k) => S(g, { o: v * (0.9 - k * 0.2), s: 0.8 + 0.2 * p(t, a + k * 0.1, 0.9) + 0.03 * Math.sin(t * 2 + k) }));
+  S(r1box, { o: v, s: 0.7 + 0.3 * p(t, a + 0.15, 0.8, E.outBack), y: Math.sin(t * 1.5) * 10 });
+  leaves.forEach((l, k) => {
+    const ang = t * 0.6 + k * (Math.PI * 2 / leaves.length);
+    const rad = 330 + 20 * Math.sin(t * 1.3 + k);
+    const lv = v * p(t, ls(3) + 0.3 + k * 0.07, 0.4);
+    S(l, { o: lv, x: Math.cos(ang) * rad, y: Math.sin(ang) * rad * 0.75, r: ang * 57 + 90, s: 0.7 + 0.3 * lv });
+  });
+  const ct = wordT(4, 2) - 0.15;
+  S(c1, { o: env(t, ct, b, 0.3, 0.3), y: (1 - p(t, ct, 0.5, E.outBack)) * 60 });
+  S(c1b, { o: env(t, ct + 0.3, b, 0.3, 0.3) });
+});
+
+// ---------- REASON 2: relief ----------
+const h2 = headline('يخفّف', 'الأعراض');
+const gauge = el('div', 'abs', `
+  <div style="position:relative;width:840px;height:26px;border-radius:20px;background:linear-gradient(90deg,#a6e65a,#f2d14b 55%,#ff7a45);box-shadow:0 0 30px rgba(255,138,76,.25)"></div>
+  <div id="mk" style="position:absolute;top:-30px;left:0;width:8px;height:86px;border-radius:6px;background:#fff;box-shadow:0 0 18px #fff"></div>
+  <div style="display:flex;justify-content:space-between;width:840px;margin-top:26px;font-weight:800;font-size:40px">
+    <span style="color:#ff9a6b">حرّ وتعرّق</span><span style="color:#f2d14b">متوسط</span><span style="color:#a6e65a">راحة</span></div>`, stage);
+Object.assign(gauge.style, { left: '120px', top: '820px', direction: 'rtl' });
+const mk = gauge.querySelector('#mk');
+const c2 = [
+  chip(ICON.fire + '<span>الهبّات الساخنة</span>', 0, 1060),
+  chip(ICON.drop + '<span>التعرّق الليلي</span>', 0, 1190),
+  chip(ICON.wave + '<span>تقلّب المزاج</span>', 0, 1320),
+];
+on(t => {
+  const a = secR2(), b = secR3() - 0.05;
+  const v = env(t, a, b, 0.35, 0.3);
+  S(h2, { o: v, y: (1 - p(t, a, 0.6)) * 50 });
+  S(gauge, { o: v, y: (1 - p(t, a + 0.1, 0.6)) * 40 });
+  // marker travels from hot (right, x=832) to relief (left, x=0) across reason 2
+  const k = p(t, ls(5) + 0.4, le(6) - ls(5), E.inOutCubic);
+  mk.style.left = (832 - 832 * k).toFixed(1) + 'px';
+  const at = [wordT(5, 4), wordT(6, 0), wordT(6, 2)];
+  c2.forEach((c, i) => S(c, { o: env(t, at[i] - 0.15, b, 0.3, 0.3), x: (1 - p(t, at[i] - 0.15, 0.5, E.outBack)) * 300 }));
+});
+
+// ---------- REASON 3: non-hormonal + 1/day ----------
+const h3 = headline('تركيبة', 'غير هرمونية');
+const shield = el('div', 'abs', ICON.shield, stage); Object.assign(shield.style, { left: '390px', top: '780px', filter: 'drop-shadow(0 0 40px rgba(166,230,90,.6))' });
+const ck = shield.querySelector('#ck');
+const c3 = chip(ICON.pill + '<span><span class="g" style="font-family:Outfit;font-weight:800">1×</span> حبّة وحدة باليوم</span>', 0, 1240);
+on(t => {
+  const a = secR3(), b = secCTA() - 0.05;
+  const v = env(t, a, b, 0.35, 0.3);
+  S(h3, { o: v, y: (1 - p(t, a, 0.6)) * 50 });
+  S(shield, { o: v, s: 0.5 + 0.5 * p(t, a + 0.2, 0.7, E.outBack) });
+  ck.setAttribute('stroke-dashoffset', (140 * (1 - p(t, wordT(7, 2), 0.5))).toFixed(1));
+  const ct = ls(8) - 0.15;
+  S(c3, { o: env(t, ct, b, 0.3, 0.3), y: (1 - p(t, ct, 0.5, E.outBack)) * 60 });
+});
+
+// ---------- CTA ----------
+const ch = el('div', 'abs center h1', '<div style="font-size:120px">اطلبيه</div><div class="g" style="font-size:150px">الحين</div>', stage); ch.style.top = '170px';
+const crings = rings(540, 900);
+const cbox = el('img', 'abs box', '', stage); cbox.src = '../assets/gen/box_angle.png'; Object.assign(cbox.style, { width: '640px', left: '220px', top: '660px' });
+const cbtn = el('div', 'abs center', `<div class="btn">${ICON.cart}<span>هيلث ستور</span></div>`, stage); cbtn.style.top = '1270px';
+const curl = el('div', 'abs center', '<span style="font-family:Outfit;font-weight:600;font-size:46px;letter-spacing:1px;color:#e9fbe0">healthstore.sa</span>', stage); curl.style.top = '1440px';
+const cname = el('div', 'abs center', '<span style="font-weight:800;font-size:52px">سيميدونا فورت · <span style="color:#9fc7cf;font-weight:700">٣٠ قرص</span></span>', stage); cname.style.top = '1180px';
+const disc = el('div', 'disc', 'مستحضر عشبي · يُستخدم حسب الإرشادات · لا يُستخدم أثناء الحمل أو الرضاعة أو مع أمراض الكبد · استشيري طبيبك إذا كنتِ تستخدمين علاجاً هرمونياً', stage);
+on(t => {
+  const a = secCTA();
+  const v = t >= a ? p(t, a, 0.4) : 0;
+  S(ch, { o: v, y: (1 - p(t, a, 0.6)) * -40 });
+  crings.forEach((g, k) => S(g, { o: v * (0.9 - k * 0.2), s: 0.8 + 0.2 * p(t, a + k * 0.1, 0.9) + 0.03 * Math.sin(t * 2 + k) }));
+  S(cbox, { o: v, s: 0.6 + 0.4 * p(t, a + 0.1, 0.9, E.outBack), y: Math.sin(t * 1.5) * 12, r: -3 + Math.sin(t * 0.9) * 2 });
+  S(cname, { o: p(t, a + 0.5, 0.4) });
+  const bp = p(t, a + 0.7, 0.6, E.outBack);
+  S(cbtn, { o: p(t, a + 0.7, 0.3), s: (0.6 + 0.4 * bp) * (1 + 0.03 * Math.sin(t * 5)) });
+  S(curl, { o: p(t, a + 1.0, 0.4) });
+  S(disc, { o: 0.9 * p(t, a + 1.2, 0.5) });
+});
+
+// ---------- captions ----------
+captions(stage, { mode: 'reveal', from: 0, to: 8 });
+</script>
+</body>
+</html>
