@@ -14,8 +14,24 @@ W=/home/user/work/$V; mkdir -p $W
 export NODE_PATH=${NODE_PATH:-$(npm root -g)}
 cd $P/render
 if [ "$MODE" = stills ]; then
+  if [[ "$ARG" == auto* ]]; then
+    ARG=$(python3 -c "import json;T=json.load(open('$W/timing.json'))['total'];n=${ARG#auto:};print(','.join(f'{(i+0.5)*T/n:.2f}' for i in range(n)))")
+  fi
+  rm -rf $W/stills
   node render.mjs $V.html $W/timing.json --stills "$ARG" $W/stills
-  cd $W/stills && montage -mode concatenate -tile 6x $(ls -v *.jpg) -resize 360x -quality 80 ../sheet.jpg 2>/dev/null || convert $(ls -v *.jpg | head -6) -resize 360x +append ../sheet.jpg
+  python3 - "$W" <<'EOF'
+import glob, re, sys
+from PIL import Image
+W = sys.argv[1]
+fs = sorted(glob.glob(f'{W}/stills/t*.jpg'), key=lambda f: float(re.search(r't([\d.]+)\.jpg', f).group(1)))
+w, h = 300, 533
+for part in range(0, len(fs), 9):
+    sub = fs[part:part + 9]
+    sheet = Image.new('RGB', (w * len(sub), h), 'white')
+    for i, f in enumerate(sub):
+        sheet.paste(Image.open(f).resize((w, h)), (i * w, 0))
+    sheet.save(f'/home/user/sheet_{W.split("/")[-1]}_{part // 9}.jpg', quality=80)
+EOF
   exit 0
 fi
 node render.mjs $V.html $W/timing.json $W/video.mp4 30
