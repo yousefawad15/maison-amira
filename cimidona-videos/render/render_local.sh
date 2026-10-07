@@ -6,10 +6,8 @@ set -euo pipefail
 V=$1; MODE=${2:-full}; ARG=${3:-}
 P=$(cd "$(dirname "$0")/.." && pwd)
 W=$P/work/$V; mkdir -p $W $P/out
-[ -f $P/assets/gen/box_angle.png ] || python3 $P/render/make_cutouts.py $P
-if [[ $V == v3 || $V == v4 ]]; then
-  for k in 1 2 3 4 5; do [ -f $P/assets/gen/${V}_s$k.jpg ] || python3 $P/render/fetch_assets.py $P $V; done
-fi
+# original images from the delivered videos; local cutouts only as a fallback
+[ -f $P/assets/gen/.original ] || { python3 $P/render/fetch_assets.py $P && touch $P/assets/gen/.original; } || python3 $P/render/make_cutouts.py $P
 python3 $P/render/build_audio.py $P $V $W
 export NODE_PATH=${NODE_PATH:-$(npm root -g)}
 cd $P/render

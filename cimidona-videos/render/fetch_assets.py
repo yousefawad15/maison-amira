@@ -13,13 +13,15 @@ def get(item):
     key, fn = item
     if only and not any(key.startswith(o) for o in only):
         return
-    if key.endswith("_cut"):  # cutouts are now made locally by make_cutouts.py
-        return
     raw = f"{out}/_{key}.png"
     urllib.request.urlretrieve(J["audio_base"] + fn, raw)
     from PIL import Image
-    im = Image.open(raw).convert("RGB")
-    im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS).save(f"{out}/{key}.jpg", quality=90)
+    if key.endswith("_cut"):  # original product cutouts used in the delivered videos
+        im = Image.open(raw).convert("RGBA")
+        im = im.crop(im.getbbox()); im.thumbnail((1000, 1000)); im.save(f"{out}/{key[:-4]}.png")
+    else:
+        im = Image.open(raw).convert("RGB")
+        im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS).save(f"{out}/{key}.jpg", quality=90)
     os.remove(raw)
 
 
