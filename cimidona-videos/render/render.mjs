@@ -1,10 +1,13 @@
 // Usage:
 //   node render.mjs <page.html> <timing.json> <out.mp4> [fps]
 //   node render.mjs <page.html> <timing.json> --stills <t1,t2,...> <outdir>
-import { chromium } from 'playwright';
+import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+
+// globally installed playwright: ESM ignores NODE_PATH, CommonJS require honours it
+const { chromium } = createRequire(import.meta.url)('playwright');
 
 const [html, timingPath, a3, a4, a5] = process.argv.slice(2);
 const timing = JSON.parse(fs.readFileSync(timingPath, 'utf8'));

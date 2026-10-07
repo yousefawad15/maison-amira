@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&family=Outfit:wght@400;600;800&display=block" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #f4f7f2; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: 'Tajawal', sans-serif; color: #1b2f7a;
+    background-color: #f5f8f3;
+    background-image: radial-gradient(rgba(27,47,122,.07) 2px, transparent 2.5px); background-size: 46px 46px; }
+  .abs { position: absolute; will-change: transform, opacity; }
+  .center { left: 0; right: 0; text-align: center; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(60px); }
+  .t1 { font-weight: 900; font-size: 96px; line-height: 1.15; }
+  .gr { color: #5fa82a; }
+  .bl { color: #2f8fc0; }
+  .pill { display: inline-flex; align-items: center; gap: 14px; padding: 14px 32px; border-radius: 50px; background: #fff; box-shadow: 0 10px 30px rgba(27,47,122,.12); font-weight: 800; font-size: 44px; white-space: nowrap; }
+  .pill .dot { width: 18px; height: 18px; border-radius: 50%; }
+  .card { background: #fff; border-radius: 40px; box-shadow: 0 24px 60px rgba(27,47,122,.14); }
+  .ico { width: 300px; height: 300px; border-radius: 50%; background: #fff; box-shadow: 0 24px 60px rgba(27,47,122,.14); display: flex; align-items: center; justify-content: center; }
+  .cap { position: absolute; left: 40px; right: 40px; top: 1560px; height: 220px; }
+  .cap-line { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-weight: 800; font-size: 66px; line-height: 1.5; }
+  .cap .w { display: inline-block; margin: 0 6px; padding: 0 14px; border-radius: 18px; color: #1b2f7a; transition: none; }
+  .cap .w.hl.on { background: #5fa82a; color: #fff; box-shadow: 0 8px 20px rgba(95,168,42,.35); }
+  .check { display: flex; align-items: center; gap: 24px; padding: 26px 40px; font-weight: 800; font-size: 50px; }
+  .check b { width: 64px; height: 64px; border-radius: 50%; background: #5fa82a; display: flex; align-items: center; justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: 20px; padding: 26px 70px; border-radius: 80px; background: #5fa82a; color: #fff; font-weight: 900; font-size: 64px; box-shadow: 0 16px 40px rgba(95,168,42,.45); }
+  .disc { position: absolute; left: 70px; right: 70px; top: 1800px; text-align: center; font-size: 25px; line-height: 1.5; color: rgba(27,47,122,.5); font-weight: 500; }
+  .grid { display: grid; grid-template-columns: repeat(7, 74px); gap: 14px; direction: rtl; }
+  .grid i { width: 74px; height: 74px; border-radius: 18px; background: #eef2f6; display: flex; align-items: center; justify-content: center; }
+  .grid i span { width: 34px; height: 18px; border-radius: 10px; background: #5fa82a; display: block; transform: rotate(-30deg); }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib.js"></script>
+<script>
+const stage = document.getElementById('stage');
+// soft drifting colour blobs (brand green + blue)
+const blobs = [[-120, 200, 520, '#b9e08f'], [760, 520, 480, '#a9d8ef'], [-80, 1200, 460, '#a9d8ef'], [780, 1500, 520, '#cfe8b4']].map(([x, y, r, c]) => {
+  const b = el('div', 'blob', '', stage); Object.assign(b.style, { left: x + 'px', top: y + 'px', width: r + 'px', height: r + 'px', background: c }); return b; });
+on(t => blobs.forEach((b, k) => S(b, { o: 0.55, x: Math.sin(t * 0.35 + k * 1.7) * 60, y: Math.cos(t * 0.3 + k) * 50 })));
+
+const SVG = {
+  thermo: `<svg viewBox="0 0 120 300" width="150" height="375"><rect x="40" y="10" width="40" height="220" rx="20" fill="#eef2f6" stroke="#1b2f7a" stroke-width="6"/><rect id="merc" x="50" y="40" width="20" height="190" rx="10" fill="#ff6b4a"/><circle cx="60" cy="250" r="40" fill="#ff6b4a" stroke="#1b2f7a" stroke-width="6"/><g stroke="#1b2f7a" stroke-width="5"><line x1="84" y1="60" x2="96" y2="60"/><line x1="84" y1="100" x2="96" y2="100"/><line x1="84" y1="140" x2="96" y2="140"/><line x1="84" y1="180" x2="96" y2="180"/></g></svg>`,
+  heat: `<svg viewBox="0 0 60 200" width="60" height="200"><path d="M30 195 C10 165 50 145 30 115 C10 85 50 65 30 35 C20 20 30 10 30 5" stroke="#ff8a4c" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
+  moon: `<svg viewBox="0 0 200 200" width="230" height="230"><path d="M140 30a80 80 0 1 0 30 120A70 70 0 0 1 140 30z" fill="#1b2f7a"/><circle cx="160" cy="40" r="6" fill="#2f8fc0"/><circle cx="40" cy="30" r="4" fill="#2f8fc0"/></svg>`,
+  drop: `<svg viewBox="0 0 40 56" width="40" height="56"><path d="M20 2C14 14 4 24 4 36a16 16 0 0 0 32 0C36 24 26 14 20 2z" fill="#2f8fc0"/></svg>`,
+  face: (mood) => `<svg viewBox="0 0 200 200" width="230" height="230"><circle cx="100" cy="100" r="90" fill="${mood > 0 ? '#ffd45c' : '#a9c3e8'}" stroke="#1b2f7a" stroke-width="7"/><circle cx="70" cy="85" r="10" fill="#1b2f7a"/><circle cx="130" cy="85" r="10" fill="#1b2f7a"/><path d="M60 ${130 - mood * 10} Q100 ${130 + mood * 30} 140 ${130 - mood * 10}" stroke="#1b2f7a" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
+  heart: `<svg viewBox="0 0 200 180" width="260" height="234"><path d="M100 170 C20 110 0 70 20 40 C40 10 85 10 100 45 C115 10 160 10 180 40 C200 70 180 110 100 170z" fill="#5fa82a"/><path d="M60 60 C70 45 85 45 90 55" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity=".7"/></svg>`,
+  plant: `<svg viewBox="0 0 400 520" width="400" height="520">` + [[80, 0.8], [200, 1], [320, 0.85]].map(([x, s], k) =>
+      `<g class="stem" style="transform-origin:${x}px 520px"><path d="M${x} 520 C${x - 10} 400 ${x + 12} 300 ${x} ${520 - 440 * s}" stroke="#5fa82a" stroke-width="7" fill="none"/>` +
+      `<path d="M${x} 440 q-60 -10 -80 -60 q50 0 80 40z" fill="#7cbf3a"/><path d="M${x} 400 q60 -10 80 -60 q-50 0 -80 40z" fill="#7cbf3a"/>` +
+      Array.from({ length: 22 }, (_, i) => `<circle class="bud" cx="${x + Math.sin(i * 1.9) * 12}" cy="${520 - 440 * s + 10 + i * 8}" r="${8 - i * 0.18}" fill="#fff" stroke="#c9dcef" stroke-width="2"/>`).join('') + `</g>`).join('') + `</svg>`,
+  check: `<svg viewBox="0 0 40 40" width="40" height="40"><path d="M9 21 L17 29 L32 12" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  cart: `<svg viewBox="0 0 64 64" width="58" height="58"><path d="M6 10h8l7 30h30l6-22H18" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="52" r="5" fill="#fff"/><circle cx="48" cy="52" r="5" fill="#fff"/></svg>`,
+  pill: `<svg viewBox="0 0 64 64" width="80" height="80"><g transform="rotate(-35 32 32)"><rect x="6" y="20" width="52" height="24" rx="12" fill="#fff" stroke="#1b2f7a" stroke-width="4"/><path d="M32 20 h14 a12 12 0 0 1 0 24 h-14z" fill="#5fa82a" stroke="#1b2f7a" stroke-width="4"/></g></svg>`,
+};
+
+// ---------- symptom scenes (L0, L1, L2) ----------
+function symptom(innerHTML, pillHTML) {
+  const g = el('div', 'abs', '', stage); Object.assign(g.style, { left: 0, right: 0, top: '380px', height: '900px' });
+  const ic = el('div', 'ico abs', innerHTML, g); Object.assign(ic.style, { left: '340px', top: '120px', width: '400px', height: '400px' });
+  const pl = el('div', 'abs center', `<div class="pill">${pillHTML}</div>`, g); pl.style.top = '620px';
+  return { g, ic, pl };
+}
+const sy1 = symptom(SVG.thermo, '<span class="dot" style="background:#ff6b4a"></span>هبّات ساخنة');
+const heat = [0, 1, 2].map(k => { const h = el('div', 'abs', SVG.heat, sy1.g); Object.assign(h.style, { left: (250 + k * 230) + 'px', top: '0px' }); return h; });
+const merc = sy1.ic.querySelector('#merc');
+const sy2 = symptom(SVG.moon, '<span class="dot" style="background:#2f8fc0"></span>تعرّق ليلي');
+const drops = [0, 1, 2, 3].map(k => { const d = el('div', 'abs', SVG.drop, sy2.g); Object.assign(d.style, { left: (330 + k * 120) + 'px', top: '160px' }); return d; });
+const clock = el('div', 'abs', '<span style="font-family:Outfit;font-weight:800;font-size:64px;direction:ltr;display:inline-block">3:00</span>', sy2.g); Object.assign(clock.style, { left: '700px', top: '110px', background: '#1b2f7a', color: '#fff', padding: '6px 26px', borderRadius: '22px' });
+const sy3 = symptom('', '<span class="dot" style="background:#9b7be0"></span>تقلّب المزاج');
+const faceA = el('div', 'abs', SVG.face(1), sy3.ic), faceB = el('div', 'abs', SVG.face(-1), sy3.ic);
+[faceA, faceB].forEach(f => Object.assign(f.style, { left: '85px', top: '85px' }));
+const symptoms = [sy1, sy2, sy3];
+on(t => {
+  symptoms.forEach((s, k) => {
+    const a = ls(k) - 0.15, b = (k < 2 ? ls(k + 1) : ls(3)) - 0.2;
+    const v = env(t, a, b, 0.3, 0.25);
+    const pin = p(t, a, 0.6, E.outBack);
+    S(s.g, { o: v, x: (1 - p(t, a, 0.5)) * 320 - p(t, b, 0.35, E.inCubic) * 320 });
+    S(s.ic, { o: 1, s: 0.6 + 0.4 * pin });
+    S(s.pl, { o: p(t, a + 0.25, 0.3), y: (1 - p(t, a + 0.25, 0.4, E.outBack)) * 40 });
+  });
+  const m = p(t, ls(0), le(0) - ls(0) + 0.3, E.inOutCubic);
+  merc.setAttribute('y', (200 - 160 * m).toFixed(1)); merc.setAttribute('height', (30 + 160 * m).toFixed(1));
+  heat.forEach((h, k) => S(h, { o: 0.4 + 0.5 * Math.abs(Math.sin(t * 3 + k)), y: -((t * 80 + k * 50) % 120) }));
+  drops.forEach((d, k) => { const ph = ((t * 0.9 + k * 0.27) % 1); S(d, { o: Math.sin(ph * Math.PI), y: 380 + ph * 260 }); });
+  const flip = Math.sin((t - ls(2)) * 5.5) > 0;
+  S(faceA, { o: flip ? 1 : 0 }); S(faceB, { o: flip ? 0 : 1, r: Math.sin(t * 8) * 4 });
+});
+
+// ---------- summary (L3) + not alone (L4) ----------
+const sumT = el('div', 'abs center t1', 'أعراض <span class="gr">انقطاع الطمث</span>', stage); sumT.style.top = '330px'; sumT.style.fontSize = '84px';
+const minis = [['#ffece6', SVG.thermo.replace('width="150" height="375"', 'width="70" height="175"'), 'هبّات'],
+               ['#e6f2fa', SVG.moon.replace('width="230" height="230"', 'width="120" height="120"'), 'تعرّق'],
+               ['#f1ebfc', SVG.face(-1).replace('width="230" height="230"', 'width="120" height="120"'), 'مزاج']].map(([bg, svg, lab], k) => {
+  const m = el('div', 'abs', `<div class="ico" style="width:230px;height:230px;background:${bg}">${svg}</div><div style="text-align:center;font-weight:800;font-size:42px;margin-top:18px">${lab}</div>`, stage);
+  Object.assign(m.style, { left: (690 - k * 300) + 'px', top: '560px' }); return m; });
+const heart = el('div', 'abs', SVG.heart, stage); Object.assign(heart.style, { left: '410px', top: '960px' });
+const alone = el('div', 'abs center t1', 'مو <span class="gr">لحالكِ</span>', stage); alone.style.top = '1240px'; alone.style.fontSize = '90px';
+on(t => {
+  const a = ls(3) - 0.15, b = ls(5) - 0.25;
+  const v = env(t, a, b, 0.3, 0.3);
+  S(sumT, { o: v, y: (1 - p(t, a, 0.5)) * 40 });
+  minis.forEach((m, k) => S(m, { o: v * p(t, a + 0.12 * k, 0.3), s: 0.6 + 0.4 * p(t, a + 0.12 * k, 0.6, E.outBack) }));
+  const h = ls(4) - 0.1;
+  S(heart, { o: env(t, h, b, 0.25, 0.3), s: (0.5 + 0.5 * p(t, h, 0.6, E.outElastic)) * (1 + 0.05 * Math.sin(t * 7)) });
+  S(alone, { o: env(t, wordT(4, 2) - 0.1, b, 0.25, 0.3), y: (1 - p(t, wordT(4, 2) - 0.1, 0.4)) * 30 });
+});
+
+// ---------- product hero (L5–L8) ----------
+const kick = el('div', 'abs center', '<span class="pill" style="font-size:40px;color:#5fa82a">الحل بلمسة من الطبيعة</span>', stage); kick.style.top = '230px';
+const pname = el('div', 'abs center t1', 'سيميدونا <span class="gr">فورت</span>', stage); pname.style.top = '330px'; pname.style.fontSize = '104px';
+const shadow = el('div', 'abs', '', stage); Object.assign(shadow.style, { left: '290px', top: '1050px', width: '500px', height: '60px', borderRadius: '50%', background: 'radial-gradient(rgba(27,47,122,.25), transparent 70%)' });
+const hero = el('img', 'abs', '', stage); hero.src = '../assets/gen/box_front.png'; Object.assign(hero.style, { width: '600px', left: '240px', top: '540px', filter: 'drop-shadow(0 30px 40px rgba(27,47,122,.2))' });
+const plant = el('div', 'abs', SVG.plant, stage); Object.assign(plant.style, { left: '340px', top: '980px' });
+const stems = Array.from(plant.querySelectorAll('.stem'));
+const natPill = el('div', 'abs center', '<div class="pill"><span class="dot" style="background:#5fa82a"></span>مستخلص نباتي · الكوهوش السوداء</div>', stage); natPill.style.top = '1400px';
+const checks = [['يخفّف الأعراض', 7, 2], ['تركيبة غير هرمونية', 8, 1]].map(([txt, li, wi], k) => {
+  const c = el('div', 'abs', `<div class="card check"><b>${SVG.check}</b><span>${txt}</span></div>`, stage);
+  Object.assign(c.style, { right: '120px', top: (1080 + k * 160) + 'px' }); return { c, li, wi }; });
+on(t => {
+  const a = ls(5) - 0.2, b = ls(9) - 0.25;
+  const v = env(t, a, b, 0.25, 0.3);
+  S(kick, { o: v * p(t, a, 0.4), y: (1 - p(t, a, 0.5)) * -30 });
+  S(pname, { o: v, s: 0.85 + 0.15 * p(t, a, 0.5, E.outBack) });
+  const drop = p(t, a, 0.9, E.outElastic);
+  // hero shrinks/moves up when plant + checks arrive
+  const up = p(t, ls(6) - 0.1, 0.6, E.inOutCubic);
+  const right = p(t, ls(7) - 0.2, 0.6, E.inOutCubic);
+  S(hero, { o: v, y: (1 - drop) * -600 + up * -40 + Math.sin(t * 1.6) * 8, s: 1 - 0.25 * up - 0.1 * right, x: -right * 220 });
+  S(shadow, { o: v * drop * (1 - up), s: 0.6 + 0.4 * drop });
+  const pv = env(t, ls(6) - 0.1, ls(7) - 0.25, 0.3, 0.3);
+  S(plant, { o: pv });
+  stems.forEach((s, k) => { s.style.transform = `scaleY(${p(t, ls(6) + k * 0.15, 0.9, E.outCubic).toFixed(3)})`; });
+  S(natPill, { o: env(t, wordT(6, 4) - 0.1, ls(7) - 0.25, 0.3, 0.3), y: (1 - p(t, wordT(6, 4) - 0.1, 0.4, E.outBack)) * 40 });
+  checks.forEach(({ c, li, wi }) => { const at = wordT(li, wi) - 0.2; S(c, { o: env(t, at, b, 0.3, 0.3), x: (1 - p(t, at, 0.5, E.outBack)) * -500 }); });
+});
+
+// ---------- daily use (L9–L10) ----------
+const dTitle = el('div', 'abs center', `<div class="pill" style="font-size:54px;padding:18px 40px">${SVG.pill}<span>حبّة وحدة باليوم</span></div>`, stage); dTitle.style.top = '300px';
+const cal = el('div', 'abs card', '<div class="grid">' + Array.from({ length: 28 }, () => '<i><span></span></i>').join('') + '</div>', stage);
+Object.assign(cal.style, { left: '180px', top: '520px', padding: '40px' });
+const cells = Array.from(cal.querySelectorAll('.grid i span'));
+const tl = el('div', 'abs', `<div style="display:flex;justify-content:space-between;font-weight:800;font-size:40px;margin-bottom:20px"><span>اليوم ١</span><span class="gr">أسبوعين – ٤ أسابيع</span></div>
+  <div style="position:relative;height:30px;border-radius:20px;background:#e3e9f0;overflow:hidden"><i id="tlf" style="position:absolute;top:0;bottom:0;right:0;width:100%;background:linear-gradient(270deg,#a9d8ef,#5fa82a);transform-origin:right"></i></div>`, stage);
+Object.assign(tl.style, { left: '150px', right: '150px', top: '1250px' });
+const tlf = tl.querySelector('#tlf');
+on(t => {
+  const a = ls(9) - 0.2, b = ls(11) - 0.25;
+  const v = env(t, a, b, 0.3, 0.3);
+  S(dTitle, { o: v, s: 0.8 + 0.2 * p(t, a, 0.5, E.outBack) });
+  S(cal, { o: v, y: (1 - p(t, a + 0.1, 0.6)) * 60 });
+  const fillN = 28 * p(t, a + 0.3, (le(10) - a) * 0.95, E.lin);
+  cells.forEach((c, k) => { const q = clamp(fillN - k); c.style.opacity = q.toFixed(2); c.style.transform = `rotate(-30deg) scale(${(0.3 + 0.7 * q).toFixed(2)})`; });
+  S(tl, { o: env(t, ls(10) - 0.1, b, 0.3, 0.3) });
+  tlf.style.transform = `scaleX(${p(t, ls(10), le(10) - ls(10), E.inOutCubic).toFixed(3)})`;
+});
+
+// ---------- CTA (L11) ----------
+const cta = el('div', 'abs center t1', 'اطلبيه <span class="gr">الحين</span>', stage); cta.style.top = '210px'; cta.style.fontSize = '120px';
+const cbox = el('img', 'abs', '', stage); cbox.src = '../assets/gen/box_angle.png'; Object.assign(cbox.style, { width: '640px', left: '220px', top: '470px', filter: 'drop-shadow(0 40px 50px rgba(27,47,122,.25))' });
+const cchips = el('div', 'abs center', '<span class="pill" style="font-size:38px">✓ غير هرموني</span>&nbsp;&nbsp;<span class="pill" style="font-size:38px">٣٠ قرص</span>&nbsp;&nbsp;<span class="pill" style="font-size:38px">حبّة يومياً</span>', stage); cchips.style.top = '1140px';
+const cbtn = el('div', 'abs center', `<div class="btn">${SVG.cart}<span>من هيلث ستور</span></div>`, stage); cbtn.style.top = '1300px';
+const curl = el('div', 'abs center', '<span style="font-family:Outfit;font-weight:600;font-size:46px;direction:ltr;display:inline-block">healthstore.sa</span>', stage); curl.style.top = '1470px';
+const tag = el('div', 'abs center', '<span style="font-weight:800;font-size:46px">وارجعي لراحتكِ <span class="gr">💚</span></span>', stage); tag.style.top = '1560px';
+const disc = el('div', 'disc', 'مستحضر عشبي · يُستخدم حسب الإرشادات · لا يُستخدم أثناء الحمل أو الرضاعة أو مع أمراض الكبد · استشيري طبيبك إذا كنتِ تستخدمين علاجاً هرمونياً', stage);
+on(t => {
+  const a = ls(11) - 0.2;
+  const v = t >= a ? p(t, a, 0.4) : 0;
+  S(cta, { o: v, y: (1 - p(t, a, 0.5)) * -30 });
+  S(cbox, { o: v, s: 0.7 + 0.3 * p(t, a + 0.1, 0.8, E.outBack), y: Math.sin(t * 1.5) * 10, r: -2 + Math.sin(t) * 1.5 });
+  S(cchips, { o: p(t, a + 0.5, 0.4), y: (1 - p(t, a + 0.5, 0.4)) * 20 });
+  S(cbtn, { o: p(t, a + 0.7, 0.3), s: (0.7 + 0.3 * p(t, a + 0.7, 0.6, E.outBack)) * (1 + 0.03 * Math.sin(t * 5)) });
+  S(curl, { o: p(t, a + 0.9, 0.4) });
+  S(tag, { o: p(t, le(11) + 0.2, 0.5) });
+  S(disc, { o: p(t, a + 1.1, 0.5) });
+});
+
+captions(stage, { mode: 'karaoke', from: 0, to: 10 });
+</script>
+</body>
+</html>
