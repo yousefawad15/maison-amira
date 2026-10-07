@@ -1,6 +1,6 @@
 """Saudi-dialect voiceover via Google AI Studio (Gemini API TTS), one clip per script line.
 
-python3 tts_gemini.py <project_dir> [v1 v2 ...]     (needs GEMINI_API_KEY)
+python3 tts_gemini.py <project_dir> [v1 v2 ...]     (GEMINI_API_KEY or network secret)
 
 Each take is transcribed back by a Gemini text model; takes whose transcript drifts
 from the script are regenerated (up to MAX_TRIES). Output: <project>/audio/<vid>/lNN.wav
@@ -9,9 +9,10 @@ import base64, difflib, json, os, re, subprocess, sys, time, urllib.error, urlli
 
 proj = sys.argv[1]
 only = sys.argv[2:] or None
+# Key comes from GEMINI_API_KEY, or (preferred) a cloud-environment network secret that the
+# agent proxy attaches as the x-goog-api-key header for generativelanguage.googleapis.com.
 KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-if not KEY:
-    sys.exit("GEMINI_API_KEY is not set")
+HDR = {"x-goog-api-key": KEY} if KEY else {}
 API = "https://generativelanguage.googleapis.com/v1beta"
 S = json.load(open(f"{proj}/scripts.json", encoding="utf-8"))
 G = S.get("gemini_tts", {})
@@ -28,7 +29,7 @@ def post(model, body, tries=6):
     url = f"{API}/models/{model}:generateContent"
     data = json.dumps(body).encode()
     for k in range(tries):
-        req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json", "x-goog-api-key": KEY})
+        req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json", **HDR})
         try:
             with urllib.request.urlopen(req, timeout=120) as r:
                 return json.load(r)
@@ -44,7 +45,7 @@ def post(model, body, tries=6):
 
 
 def pick_models():
-    with urllib.request.urlopen(urllib.request.Request(f"{API}/models?pageSize=200", headers={"x-goog-api-key": KEY})) as r:
+    with urllib.request.urlopen(urllib.request.Request(f"{API}/models?pageSize=200", headers=HDR)) as r:
         names = [m["name"].split("/")[-1] for m in json.load(r)["models"]]
     tts = [n for n in names if "tts" in n]
     pref = G.get("tts_model")
