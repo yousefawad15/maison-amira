@@ -19,17 +19,11 @@ All four end on the HealthStore.sa CTA («اطلبيه الحين من هيلث 
 - 30 tablets · HealthStore.sa (SAR 98)
 - Not for pregnancy, breastfeeding or active liver disease; consult a doctor if on hormonal therapy
 
-## Pipeline
-1. `scripts.json` — VO lines, highlight words, per-video timeline (gaps, SFX cues, music style).
-2. Voiceover — Higgsfield `seed_audio`, custom voice element **"Cimidona narrator"**, one clip per line
-   (URLs in `jobs.json`). Lines were QA'd with faster-whisper (medium); five re-takes replaced takes
-   that dropped or added words.
-3. Story stills (v3/v4) — Higgsfield Nano Banana Pro with a character portrait + the real product photo as references.
-4. `render/build_audio.py` — trims clips, applies 1.1× tempo, aligns word timings (whisper),
-   lays out the timeline, synthesises a music bed + whooshes/chime, ducks music under VO, loudness-normalises (−15 LUFS).
-5. `render/v1.html`, `v2.html`, `v3.html`/`v4.html` (+ `story.js`/`story.css`) — deterministic HTML compositions
-   driven by `window.seek(t)` (`render/lib.js`).
-6. `render/render.mjs` — Playwright captures every frame → ffmpeg (H.264 CRF 18) → muxed with AAC audio.
-7. `render/run.sh <v1..v4> [full|stills auto:N] [upload_url]` — runs the whole thing inside the Higgsfield sandbox.
-
-To change copy: edit `scripts.json`, regenerate the affected TTS line(s), update `jobs.json`, re-run `run.sh` with `REBUILD_AUDIO=1`.
+## Pipeline (current — no Higgsfield, see CLAUDE.md)
+1. `scripts.json` — VO lines, highlight words, per-video voice/persona and timeline.
+2. `render/tts_gemini.py` — Google AI Studio TTS (`gemini-3.1-flash-tts-preview`), Saudi (Riyadh/Najdi) dialect.
+   One whole-script request per video (voices: Leda for v1/v2, Vindemiatrix for v3/v4), split into lines by an
+   alignment step, then checked by a Gemini model for dialect and word-for-word accuracy (`audio/qa_report.json`).
+   Auth: `GEMINI_API_KEY` (sent as `?key=`). Free tier allows ~10 TTS requests/day per model.
+3. `render/build_audio.py` — timeline, word timings, synthesized music bed; no transition sounds, soft end chime only.
+4. `render/render_local.sh <v1..v4>` — fetches the original images/cut-outs, renders frames with Playwright, muxes to `out/`.
