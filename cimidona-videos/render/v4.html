@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@500;700;800;900&family=Outfit:wght@600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="story.css">
+<style>:root { --bg: #06121c; --bg2: #123552; --accent: #7fd0f0; --hl: #9be36a; --tint: linear-gradient(0deg, rgba(10,40,70,.12), rgba(10,40,70,.12)); }</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib.js"></script>
+<script>
+window.CFG = {
+  intro: { bg: 'v4_s1', kicker: 'قصّتي مع سنّ الأمل', title: 'سنة الخمسين…\nما توقعت تكون كذا' },
+  scenes: [
+    { img: 'v4_s1', from: 1, ch: 'أول علامة', chapter: 'وسط الاجتماع', kb: { s0: 1.04, s1: 1.15, x1: -30, y1: -30 } },
+    { img: 'v4_s2', from: 2, ch: 'الساعة ٣ الفجر', chapter: 'مو أنا', kb: { s0: 1.14, s1: 1.04, y1: 0 } },
+    { img: 'v4_s3', from: 3, ch: 'نصيحة', chapter: 'الصيدلانية', kb: { s0: 1.04, s1: 1.13, x1: 25 } },
+    { img: 'v4_s4', from: 5, ch: 'كل صباح', chapter: 'روتيني الجديد', kb: { s0: 1.03, s1: 1.12, y1: -50 } },
+    { img: 'v4_s5', from: 9, ch: 'اليوم', chapter: 'رجعت أنا', kb: { s0: 1.12, s1: 1.03, y1: 10 } },
+  ],
+  card: { from: 5, scene: 3, sub: 'مستخلص نباتي لدعمكِ في سنّ الأمل', chips: [['مستخلص نباتي', [6, 1]], ['غير هرموني', [6, 3]], ['حبّة الصبح', [7, 0]]] },
+  calendar: { from: 8, scene: 3 },
+  end: { from: 10, lead: 1.2, title: 'سنّ الأمل…\nبداية جديدة' },
+  capFrom: 1, capTo: 9,
+};
+</script>
+<script src="story.js"></script>
+</body>
+</html>

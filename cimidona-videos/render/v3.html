@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@500;700;800;900&family=Outfit:wght@600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="story.css">
+<style>:root { --bg: #140d08; --bg2: #3a2616; --accent: #e8c27a; --hl: #f3d38f; --tint: linear-gradient(0deg, rgba(60,30,10,.12), rgba(60,30,10,.12)); }</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib.js"></script>
+<script>
+window.CFG = {
+  intro: { bg: 'v3_s1', kicker: 'قصّتي مع سنّ الأمل', title: 'قبل زواج بنتي\nبشهرين…' },
+  scenes: [
+    { img: 'v3_s1', from: 1, ch: 'الفصل ١', chapter: 'الليالي الطويلة', count: '٦٠', kb: { s0: 1.05, s1: 1.16, y1: -50 } },
+    { img: 'v3_s2', from: 3, ch: 'الفصل ٢', chapter: 'الهبّات', count: '٥٢', kb: { s0: 1.14, s1: 1.04, x0: 30, x1: -10, y1: 0 } },
+    { img: 'v3_s3', from: 5, ch: 'الفصل ٣', chapter: 'نصيحة أختي', count: '٤١', kb: { s0: 1.04, s1: 1.13, x1: 30 } },
+    { img: 'v3_s4', from: 6, ch: 'الفصل ٤', chapter: 'روتيني الجديد', count: '٣٠', kb: { s0: 1.03, s1: 1.1, y0: -10, y1: -60 } },
+    { img: 'v3_s5', from: 8, ch: 'الفصل ٥', chapter: 'يوم الزواج', count: 'اليوم', kb: { s0: 1.12, s1: 1.03, y1: 10 } },
+  ],
+  countdown: { label: 'باقي على الزواج', unit: 'يوم' },
+  card: { from: 6, scene: 3, sub: 'مستخلص نباتي لراحتكِ في سنّ الأمل', chips: [['غير هرموني', [6, 3]], ['الكوهوش السوداء', [7, 2]], ['حبّة يومياً', [7, 4]]] },
+  end: { from: 10, lead: 1.2, title: 'راحتكِ تبدأ\nمن اليوم…' },
+  capFrom: 1, capTo: 9,
+};
+</script>
+<script src="story.js"></script>
+</body>
+</html>
