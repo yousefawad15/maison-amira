@@ -82,7 +82,7 @@
   const pchips = Array.from(pc.querySelectorAll('.pcc span'));
   on(t => {
     const a = ls(C.card.from) - 0.1, b = sEnd(C.card.scene) - 0.3;
-    S(pc, { o: env(t, a, b, 0.35, 0.3), y: (1 - p(t, a, 0.6, E.outBack)) * 120 });
+    S(pc, { o: env(t, a, b, 0.35, 0.3), y: (C.card.dy || 0) + (1 - p(t, a, 0.6, E.outBack)) * 120 });
     pchips.forEach((c, k) => { const [li, wi] = C.card.chips[k][1]; const at = wordT(li, wi) - 0.15; S(c, { o: p(t, at, 0.3), s: 0.6 + 0.4 * p(t, at, 0.45, E.outBack) }); });
   });
 

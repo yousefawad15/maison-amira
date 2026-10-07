@@ -14,6 +14,7 @@ V = S["videos"][vid]
 cfg = V.get("timeline", {})
 SR = 44100
 vnum = int(vid[1:])
+TEMPO = cfg.get("tempo", S.get("tempo", 1.1))
 
 
 def sh(*a):
@@ -21,7 +22,7 @@ def sh(*a):
 
 
 def load_wav(path):
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-f", "f32le", "-ac", "1", "-ar", str(SR), "-"],
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-af", f"atempo={TEMPO}", "-f", "f32le", "-ac", "1", "-ar", str(SR), "-"],
                          check=True, capture_output=True).stdout
     return np.frombuffer(raw, dtype=np.float32).copy()
 

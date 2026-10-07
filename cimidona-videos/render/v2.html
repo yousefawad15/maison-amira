@@ -44,11 +44,11 @@ const blobs = [[-120, 200, 520, '#b9e08f'], [760, 520, 480, '#a9d8ef'], [-80, 12
 on(t => blobs.forEach((b, k) => S(b, { o: 0.55, x: Math.sin(t * 0.35 + k * 1.7) * 60, y: Math.cos(t * 0.3 + k) * 50 })));
 
 const SVG = {
-  thermo: `<svg viewBox="0 0 120 300" width="150" height="375"><rect x="40" y="10" width="40" height="220" rx="20" fill="#eef2f6" stroke="#1b2f7a" stroke-width="6"/><rect id="merc" x="50" y="40" width="20" height="190" rx="10" fill="#ff6b4a"/><circle cx="60" cy="250" r="40" fill="#ff6b4a" stroke="#1b2f7a" stroke-width="6"/><g stroke="#1b2f7a" stroke-width="5"><line x1="84" y1="60" x2="96" y2="60"/><line x1="84" y1="100" x2="96" y2="100"/><line x1="84" y1="140" x2="96" y2="140"/><line x1="84" y1="180" x2="96" y2="180"/></g></svg>`,
+  thermo: `<svg viewBox="0 0 120 300" width="190" height="475"><rect x="40" y="10" width="40" height="220" rx="20" fill="#eef2f6" stroke="#1b2f7a" stroke-width="6"/><rect id="merc" x="50" y="40" width="20" height="190" rx="10" fill="#ff6b4a"/><circle cx="60" cy="250" r="40" fill="#ff6b4a" stroke="#1b2f7a" stroke-width="6"/><g stroke="#1b2f7a" stroke-width="5"><line x1="84" y1="60" x2="96" y2="60"/><line x1="84" y1="100" x2="96" y2="100"/><line x1="84" y1="140" x2="96" y2="140"/><line x1="84" y1="180" x2="96" y2="180"/></g></svg>`,
   heat: `<svg viewBox="0 0 60 200" width="60" height="200"><path d="M30 195 C10 165 50 145 30 115 C10 85 50 65 30 35 C20 20 30 10 30 5" stroke="#ff8a4c" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
-  moon: `<svg viewBox="0 0 200 200" width="230" height="230"><path d="M140 30a80 80 0 1 0 30 120A70 70 0 0 1 140 30z" fill="#1b2f7a"/><circle cx="160" cy="40" r="6" fill="#2f8fc0"/><circle cx="40" cy="30" r="4" fill="#2f8fc0"/></svg>`,
+  moon: `<svg viewBox="0 0 200 200" width="320" height="320"><path d="M140 30a80 80 0 1 0 30 120A70 70 0 0 1 140 30z" fill="#1b2f7a"/><circle cx="160" cy="40" r="6" fill="#2f8fc0"/><circle cx="40" cy="30" r="4" fill="#2f8fc0"/></svg>`,
   drop: `<svg viewBox="0 0 40 56" width="40" height="56"><path d="M20 2C14 14 4 24 4 36a16 16 0 0 0 32 0C36 24 26 14 20 2z" fill="#2f8fc0"/></svg>`,
-  face: (mood) => `<svg viewBox="0 0 200 200" width="230" height="230"><circle cx="100" cy="100" r="90" fill="${mood > 0 ? '#ffd45c' : '#a9c3e8'}" stroke="#1b2f7a" stroke-width="7"/><circle cx="70" cy="85" r="10" fill="#1b2f7a"/><circle cx="130" cy="85" r="10" fill="#1b2f7a"/><path d="M60 ${130 - mood * 10} Q100 ${130 + mood * 30} 140 ${130 - mood * 10}" stroke="#1b2f7a" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
+  face: (mood) => `<svg viewBox="0 0 200 200" width="320" height="320"><circle cx="100" cy="100" r="90" fill="${mood > 0 ? '#ffd45c' : '#a9c3e8'}" stroke="#1b2f7a" stroke-width="7"/><circle cx="70" cy="85" r="10" fill="#1b2f7a"/><circle cx="130" cy="85" r="10" fill="#1b2f7a"/><path d="M60 ${130 - mood * 10} Q100 ${130 + mood * 30} 140 ${130 - mood * 10}" stroke="#1b2f7a" stroke-width="8" fill="none" stroke-linecap="round"/></svg>`,
   heart: `<svg viewBox="0 0 200 180" width="260" height="234"><path d="M100 170 C20 110 0 70 20 40 C40 10 85 10 100 45 C115 10 160 10 180 40 C200 70 180 110 100 170z" fill="#5fa82a"/><path d="M60 60 C70 45 85 45 90 55" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity=".7"/></svg>`,
   plant: `<svg viewBox="0 0 400 520" width="400" height="520">` + [[80, 0.8], [200, 1], [320, 0.85]].map(([x, s], k) =>
       `<g class="stem" style="transform-origin:${x}px 520px"><path d="M${x} 520 C${x - 10} 400 ${x + 12} 300 ${x} ${520 - 440 * s}" stroke="#5fa82a" stroke-width="7" fill="none"/>` +
@@ -62,19 +62,19 @@ const SVG = {
 // ---------- symptom scenes (L0, L1, L2) ----------
 function symptom(innerHTML, pillHTML) {
   const g = el('div', 'abs', '', stage); Object.assign(g.style, { left: 0, right: 0, top: '380px', height: '900px' });
-  const ic = el('div', 'ico abs', innerHTML, g); Object.assign(ic.style, { left: '340px', top: '120px', width: '400px', height: '400px' });
-  const pl = el('div', 'abs center', `<div class="pill">${pillHTML}</div>`, g); pl.style.top = '620px';
+  const ic = el('div', 'ico abs', innerHTML, g); Object.assign(ic.style, { left: '270px', top: '40px', width: '540px', height: '540px' });
+  const pl = el('div', 'abs center', `<div class="pill">${pillHTML}</div>`, g); pl.style.top = '660px'; pl.firstChild.style.fontSize = '54px';
   return { g, ic, pl };
 }
 const sy1 = symptom(SVG.thermo, '<span class="dot" style="background:#ff6b4a"></span>هبّات ساخنة');
-const heat = [0, 1, 2].map(k => { const h = el('div', 'abs', SVG.heat, sy1.g); Object.assign(h.style, { left: (250 + k * 230) + 'px', top: '0px' }); return h; });
+const heat = [0, 1, 2].map(k => { const h = el('div', 'abs', SVG.heat, sy1.g); Object.assign(h.style, { left: (230 + k * 270) + 'px', top: '-60px' }); return h; });
 const merc = sy1.ic.querySelector('#merc');
 const sy2 = symptom(SVG.moon, '<span class="dot" style="background:#2f8fc0"></span>تعرّق ليلي');
-const drops = [0, 1, 2, 3].map(k => { const d = el('div', 'abs', SVG.drop, sy2.g); Object.assign(d.style, { left: (330 + k * 120) + 'px', top: '160px' }); return d; });
-const clock = el('div', 'abs', '<span style="font-family:Outfit;font-weight:800;font-size:64px;direction:ltr;display:inline-block">3:00</span>', sy2.g); Object.assign(clock.style, { left: '700px', top: '110px', background: '#1b2f7a', color: '#fff', padding: '6px 26px', borderRadius: '22px' });
+const drops = [0, 1, 2, 3].map(k => { const d = el('div', 'abs', SVG.drop, sy2.g); Object.assign(d.style, { left: (320 + k * 130) + 'px', top: '120px' }); return d; });
+const clock = el('div', 'abs', '<span style="font-family:Outfit;font-weight:800;font-size:64px;direction:ltr;display:inline-block">3:00</span>', sy2.g); Object.assign(clock.style, { left: '730px', top: '40px', background: '#1b2f7a', color: '#fff', padding: '6px 26px', borderRadius: '22px' });
 const sy3 = symptom('', '<span class="dot" style="background:#9b7be0"></span>تقلّب المزاج');
 const faceA = el('div', 'abs', SVG.face(1), sy3.ic), faceB = el('div', 'abs', SVG.face(-1), sy3.ic);
-[faceA, faceB].forEach(f => Object.assign(f.style, { left: '85px', top: '85px' }));
+[faceA, faceB].forEach(f => Object.assign(f.style, { left: '110px', top: '110px' }));
 const symptoms = [sy1, sy2, sy3];
 on(t => {
   symptoms.forEach((s, k) => {
@@ -95,9 +95,9 @@ on(t => {
 
 // ---------- summary (L3) + not alone (L4) ----------
 const sumT = el('div', 'abs center t1', 'أعراض <span class="gr">انقطاع الطمث</span>', stage); sumT.style.top = '330px'; sumT.style.fontSize = '84px';
-const minis = [['#ffece6', SVG.thermo.replace('width="150" height="375"', 'width="70" height="175"'), 'هبّات'],
-               ['#e6f2fa', SVG.moon.replace('width="230" height="230"', 'width="120" height="120"'), 'تعرّق'],
-               ['#f1ebfc', SVG.face(-1).replace('width="230" height="230"', 'width="120" height="120"'), 'مزاج']].map(([bg, svg, lab], k) => {
+const minis = [['#ffece6', SVG.thermo.replace('width="190" height="475"', 'width="70" height="175"'), 'هبّات'],
+               ['#e6f2fa', SVG.moon.replace('width="320" height="320"', 'width="120" height="120"'), 'تعرّق'],
+               ['#f1ebfc', SVG.face(-1).replace('width="320" height="320"', 'width="120" height="120"'), 'مزاج']].map(([bg, svg, lab], k) => {
   const m = el('div', 'abs', `<div class="ico" style="width:230px;height:230px;background:${bg}">${svg}</div><div style="text-align:center;font-weight:800;font-size:42px;margin-top:18px">${lab}</div>`, stage);
   Object.assign(m.style, { left: (690 - k * 300) + 'px', top: '560px' }); return m; });
 const heart = el('div', 'abs', SVG.heart, stage); Object.assign(heart.style, { left: '410px', top: '960px' });
@@ -132,7 +132,7 @@ on(t => {
   // hero shrinks/moves up when plant + checks arrive
   const up = p(t, ls(6) - 0.1, 0.6, E.inOutCubic);
   const right = p(t, ls(7) - 0.2, 0.6, E.inOutCubic);
-  S(hero, { o: v, y: (1 - drop) * -600 + up * -40 + Math.sin(t * 1.6) * 8, s: 1 - 0.25 * up - 0.1 * right, x: -right * 220 });
+  S(hero, { o: v, y: (1 - drop) * -600 + up * -60 + right * 40 + Math.sin(t * 1.6) * 8, s: 1 - 0.12 * up - 0.1 * right, x: -right * 210 });
   S(shadow, { o: v * drop * (1 - up), s: 0.6 + 0.4 * drop });
   const pv = env(t, ls(6) - 0.1, ls(7) - 0.25, 0.3, 0.3);
   S(plant, { o: pv });
