@@ -14,7 +14,7 @@ V = S["videos"][vid]
 cfg = V.get("timeline", {})
 SR = 44100
 vnum = int(vid[1:])
-TEMPO = cfg.get("tempo", S.get("tempo", 1.1))
+TEMPO = cfg.get("tempo", S.get("tempo", 1.0))
 
 
 def sh(*a):
@@ -42,18 +42,31 @@ def trim(x, thr_db=-42, pad=0.03):
 # ---- download + trim each line ------------------------------------------
 clips = []
 for i, ln in enumerate(V["lines"]):
-    key = ln.get("audio", str(vnum * 100 + i))
-    fn = J["audio"][key]
-    local = f"{work}/l{i:02d}.wav"
+    local = f"{proj}/audio/{vid}/l{i:02d}.wav"           # Gemini TTS clips (tts_gemini.py)
+    if not os.path.exists(local) and ln.get("audio_from"):   # reuse another video's clip
+        local = f"{proj}/audio/{ln['audio_from']}.wav"
     if not os.path.exists(local):
-        urllib.request.urlretrieve(J["audio_base"] + fn, local)
+        sys.exit(f"missing voiceover clip {local}")
     x = trim(load_wav(local))
     x = x / (np.max(np.abs(x)) + 1e-9) * 0.89
     clips.append(x)
 
 # ---- word timings via faster-whisper + char interpolation ----------------
-from faster_whisper import WhisperModel
-model = WhisperModel("small", device="cpu", compute_type="int8", download_root="/opt/whisper-models")
+try:
+    from faster_whisper import WhisperModel
+    model = WhisperModel("small", device="cpu", compute_type="int8", download_root="/opt/whisper-models")
+except Exception:
+    model = None  # fall back to voiced-time interpolation
+
+
+def voiced_map(x):
+    """Map a 0..1 fraction of *voiced* time to real seconds, so pauses at commas are skipped."""
+    win = int(0.02 * SR)
+    e = np.sqrt(np.convolve(x * x, np.ones(win) / win, mode="same"))[::win]
+    v = (e > max(e.max() * 0.08, 1e-4)).astype(float)
+    cum = np.concatenate([[0], np.cumsum(v)])
+    tt = np.arange(len(cum)) * win / SR
+    return lambda q: float(np.interp(q * cum[-1], cum, tt))
 
 
 def word_times(x, words):
@@ -63,8 +76,10 @@ def word_times(x, words):
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR)
         w.writeframes((np.clip(x, -1, 1) * 32767).astype(np.int16).tobytes())
     dur = len(x) / SR
-    segs, _ = model.transcribe(tmp, word_timestamps=True, language="ar")
-    ww = [w for s in segs for w in (s.words or [])]
+    ww = []
+    if model is not None:
+        segs, _ = model.transcribe(tmp, word_timestamps=True, language="ar")
+        ww = [w for s in segs for w in (s.words or [])]
     lens = [max(1, len(w)) for w in words]
     tot = sum(lens)
     fr = np.concatenate([[0], np.cumsum(lens)]) / tot  # script char fractions at word boundaries
@@ -76,7 +91,7 @@ def word_times(x, words):
         wt = np.maximum.accumulate(wt)
         f = lambda q: float(np.interp(q, wf, wt))
     else:
-        f = lambda q: q * dur
+        f = voiced_map(x)
     out = []
     for k in range(len(words)):
         out.append((f(fr[k]), f(fr[k + 1])))
@@ -220,7 +235,7 @@ def pop(at, gain=0.25):
     sfx[a:a + n] += (np.sin(ph) * np.exp(-sg * 22) * gain).astype(np.float32)
 
 
-def chime(at, gain=0.12):
+def chime(at, gain=0.045):
     a = int(at * SR)
     n = min(int(2.2 * SR), N - a)
     sg = np.arange(n) / SR

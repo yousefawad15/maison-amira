@@ -13,13 +13,13 @@ def get(item):
     key, fn = item
     if only and not any(key.startswith(o) for o in only):
         return
+    if key.endswith("_cut"):  # cutouts are now made locally by make_cutouts.py
+        return
     raw = f"{out}/_{key}.png"
     urllib.request.urlretrieve(J["audio_base"] + fn, raw)
-    if key.endswith("_cut"):
-        name = key[:-4]  # box_front / box_angle
-        subprocess.run(["convert", raw, "-trim", "+repage", "-resize", "1000x1000>", f"{out}/{name}.png"], check=True)
-    else:
-        subprocess.run(["convert", raw, "-resize", "1200x", "-quality", "90", f"{out}/{key}.jpg"], check=True)
+    from PIL import Image
+    im = Image.open(raw).convert("RGB")
+    im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS).save(f"{out}/{key}.jpg", quality=90)
     os.remove(raw)
 
 
